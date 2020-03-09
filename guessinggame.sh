@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 # File: guessinggame.sh
 
-count=0
-
-files=$(ls | wc -l | egrep -o "([0-9]+)")
+guess=0
+files=$(ls | wc -l )
 
 function user_guess {
-	echo "How many files do you think this directory contains?"
+	echo "How many files do you think this directory contains?(excluding hidden files)"
+	echo -n "Please enter a number:"
+	echo -n ""
 	read guess
 }
 
@@ -15,10 +16,18 @@ do
 	user_guess
 	if [[ $guess -gt $files ]]
 	then
-		echo "Bad luck, too high. try again"
-	else [[ $guess -lt $files ]]
+		echo "Bad luck, too high. Try again"
+		echo -n ""
+	elif [[ $guess -lt $files ]]
+	then
 		echo "Bad luck, too low. Try again"
-	user_guess
+		echo -n ""
 	fi
 done
-echo "Well done! You guessed Right!"
+
+if [[ $guess -eq $files ]]
+	then
+	echo "You entered $guess"
+	echo -n "Well Done, You guessed the right number of Files!"
+	fi
+
